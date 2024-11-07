@@ -1,0 +1,42 @@
+/* 主页特定样式 */
+/* 从你原来的index.html中提取样式，删除已经移到common.css的部分 */
+body {
+    background: linear-gradient(-45deg, #ffe4e4, #fff5f5, #ffefef, #fff);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+/* 波纹背景动画 */
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 工具卡片样式 */
+.tools-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.tool-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    transform: translateY(0);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ... 其他主页特定样式 ... */

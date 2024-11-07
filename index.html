@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="免费在线PDF工具集合，支持PDF转换、编辑、压缩等功能">
+    <meta name="keywords" content="PDF工具,PDF转换,PDF编辑,PDF压缩">
+    <title>我爱PDF - 免费PDF在线工具</title>
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    
+    <style>
+       <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/style.css">
+    </style>
+</head>
+<body>
+    <!-- 波纹背景 -->
+    <div class="wave-container">
+        <div class="wave"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="category-nav">
+        <div class="nav-left">
+            <!-- Logo -->
+            <div class="logo-container">
+                <span class="logo-text">我爱</span>
+                <svg class="logo-heart" viewBox="0 0 24 24">
+                    <path fill="#f44336" d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/>
+                    <path fill="#ffffff" d="M19,3.5L16,7V3.5H19Z"/>
+                </svg>
+                <span class="logo-text">PDF</span>
+            </div>
+
+            <!-- 分类按钮 -->
+            <div class="category-select">
+                <button class="category-btn active">所有工具</button>
+                <button class="category-btn">格式转换</button>
+                <button class="category-btn">PDF编辑</button>
+                <button class="category-btn">PDF增强</button>
+                <button class="category-btn">文件压缩</button>
+            </div>
+        </div>
+    </nav>
+    <!-- 头部标题区 -->
+    <header class="header">
+        <h1>所有PDF工具，一站搞定</h1>
+        <p>完全免费且易于使用的PDF在线工具。合并、拆分、压缩、转换、旋转、加水印，只需点击几下。</p>
+    </header>
+
+    <!-- 工具容器 -->
+    <div class="tools-container">
+        <!-- Word转PDF -->
+        <a href="word转pdf.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#2B579A" d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M14,10H12V8H10V10H8V12H10V14H12V12H14V10M19,12L17,10V11H15V13H17V14L19,12Z"/>
+            </svg>
+            <div class="tool-name">Word转PDF</div>
+            <div class="tool-description">将Word文档转换为PDF格式，完美保留原格式</div>
+        </a>
+
+        <!-- PDF转Word -->
+        <a href="pdf转word.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#2B579A" d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M14,14V12H10V14H14M19,12L17,14V13H15V11H17V10L19,12Z"/>
+            </svg>
+            <div class="tool-name">PDF转Word</div>
+            <div class="tool-description">将PDF文档转换为可编辑的Word格式</div>
+        </a>
+
+        <!-- Excel转PDF -->
+        <a href="excel转pdf.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#217346" d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M16.2,17H18L15.1,12L17.8,7H16L14.1,10.9L12.1,7H10.3L13,12L10.2,17H12L14.1,13.2L16.2,17Z"/>
+            </svg>
+            <div class="tool-name">Excel转PDF</div>
+            <div class="tool-description">将Excel表格转换为PDF文档</div>
+        </a>
+
+        <!-- PDF转Excel -->
+        <a href="pdf转excel.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#217346" d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M17,17H13V13H17V17M11,17H7V13H11V17M17,11H13V7H17V11M11,11H7V7H11V11Z"/>
+            </svg>
+            <div class="tool-name">PDF转Excel</div>
+            <div class="tool-description">将PDF表格转换为可编辑的Excel格式</div>
+        </a>
+
+        <!-- PPT转PDF -->
+        <a href="ppt转pdf.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#B7472A" d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M11,16H13V8H11V16M7,16H9V8H7V16M15,16H17V8H15V16Z"/>
+            </svg>
+            <div class="tool-name">PPT转PDF</div>
+            <div class="tool-description">将PPT演示文稿转换为PDF格式</div>
+        </a>
+
+        <!-- PDF转PPT -->
+        <a href="pdf转ppt.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#B7472A" d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M8,12A2,2 0 0,0 6,14A2,2 0 0,0 8,16A2,2 0 0,0 10,14A2,2 0 0,0 8,12M12,8A2,2 0 0,0 10,10A2,2 0 0,0 12,12A2,2 0 0,0 14,10A2,2 0 0,0 12,8M16,12A2,2 0 0,0 14,14A2,2 0 0,0 16,16A2,2 0 0,0 18,14A2,2 0 0,0 16,12Z"/>
+            </svg>
+            <div class="tool-name">PDF转PPT</div>
+            <div class="tool-description">将PDF文档转换为PPT演示文稿</div>
+        </a>
+
+        <!-- PDF转图片 -->
+        <a href="pdf转图片.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#4CAF50" d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M5,19H19V5H5V19M13,17H15V7H13V17M9,17H11V11H9V17M7,17H8V13H7V17M16,17H17V15H16V17Z"/>
+            </svg>
+            <div class="tool-name">PDF转图片</div>
+            <div class="tool-description">将PDF文档转换为图片格式</div>
+        </a>
+
+        <!-- 图片转PDF -->
+        <a href="图片转pdf.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#FF9800" d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M5,19H19V5H5V19M10,12A2,2 0 0,0 8,14A2,2 0 0,0 10,16A2,2 0 0,0 12,14A2,2 0 0,0 10,12Z"/>
+            </svg>
+            <div class="tool-name">图片转PDF</div>
+            <div class="tool-description">将多张图片合并转换为PDF文档</div>
+        </a>
+
+        <!-- PDF编辑 -->
+        <a href="PDF编辑.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#FF5722" d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M16.7,9.35C16.92,9.14 16.92,8.79 16.7,8.58L15.42,7.3C15.21,7.08 14.86,7.08 14.65,7.3L13.65,8.3L15.7,10.35L16.7,9.35M7,14.94V17H9.06L15.12,10.94L13.06,8.88L7,14.94Z"/>
+            </svg>
+            <div class="tool-name">PDF编辑</div>
+            <div class="tool-description">编辑PDF文档内容和格式</div>
+        </a>
+
+        <!-- PDF拆分 -->
+        <a href="PDF拆分.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#2196F3" d="M20,2H8C6.9,2 6,2.9 6,4V16C6,17.1 6.9,18 8,18H20C21.1,18 22,17.1 22,16V4C22,2.9 21.1,2 20,2M20,16H8V4H20V16M4,6H2V20C2,21.1 2.9,22 4,22H18V20H4V6Z"/>
+            </svg>
+            <div class="tool-name">PDF拆分</div>
+            <div class="tool-description">将PDF文档拆分为多个文件</div>
+        </a>
+
+        <!-- PDF合并 -->
+        <a href="pdf合并.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#9C27B0" d="M17,20H5V4H17V10H19V4C19,2.89 18.1,2 17,2H5C3.9,2 3,2.9 3,4V20C3,21.1 3.9,22 5,22H17C18.1,22 19,21.1 19,20V16H17V20Z"/>
+            </svg>
+            <div class="tool-name">PDF合并</div>
+            <div class="tool-description">将多个PDF文件合并为一个</div>
+        </a>
+
+        <!-- PDF旋转 -->
+        <a href="PDF旋转.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#E91E63" d="M19,8L15,12H18A6,6 0 0,1 12,18C11,18 10.03,17.75 9.2,17.3L7.74,18.76C8.97,19.54 10.43,20 12,20A8,8 0 0,0 20,12H23L19,8M6,12A6,6 0 0,1 12,6C13,6 13.97,6.25 14.8,6.7L16.26,5.24C15.03,4.46 13.57,4 12,4A8,8 0 0,0 4,12H1L5,16L9,12H6Z"/>
+            </svg>
+            <div class="tool-name">PDF旋转</div>
+            <div class="tool-description">旋转PDF文档页面方向</div>
+        </a>
+
+        <!-- PDF加水印 -->
+        <a href="PDF加水印.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#009688" d="M12,20L16,16H13V7H11V16H8L12,20M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"/>
+            </svg>
+            <div class="tool-name">PDF加水印</div>
+            <div class="tool-description">为PDF文档添加水印</div>
+        </a>
+
+        <!-- PDF签名 -->
+        <a href="pdf签名.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#795548" d="M19.79,15.41C20.74,13.24 20.74,10.75 19.79,8.59L17.05,9.83C17.65,11.21 17.65,12.78 17.06,14.17L19.79,15.41M15.42,4.21C13.25,3.26 10.76,3.26 8.59,4.21L9.83,6.94C11.22,6.35 12.79,6.35 14.18,6.95L15.42,4.21M4.21,8.58C3.26,10.76 3.26,13.24 4.21,15.42L6.95,14.17C6.35,12.79 6.35,11.21 6.95,9.82L4.21,8.58M8.59,19.79C10.76,20.74 13.25,20.74 15.42,19.78L14.18,17.05C12.8,17.65 11.22,17.65 9.84,17.06L8.59,19.79M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
+            </svg>
+            <div class="tool-name">PDF签名</div>
+            <div class="tool-description">在PDF文档上添加电子签名</div>
+        </a>
+
+        <!-- 图片压缩 -->
+        <a href="图片压缩.html" class="tool-card">
+            <svg class="tool-icon" viewBox="0 0 24 24">
+                <path fill="#795548" d="M19,19H5V5H19M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M13.96,12.29L11.21,15.83L9.25,13.47L6.5,17H17.5L13.96,12.29Z"/>
+            </svg>
+            <div class="tool-name">图片压缩</div>
+            <div class="tool-description">压缩图片文件大小</div>
+        </a>
+    </div>
+
+    <script>
+        // 分类切换功能
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const toolCards = document.querySelectorAll('.tool-card');
+        
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const category = btn.textContent;
+                
+                toolCards.forEach(card => {
+                    if (category === '所有工具') {
+                        card.style.display = 'flex';
+                    } else {
+                        const toolName = card.querySelector('.tool-name').textContent;
+                        const shouldShow = (
+                            (category === '格式转换' && (toolName.includes('转') || toolName.includes('转换'))) ||
+                            (category === 'PDF编辑' && (toolName.includes('编辑') || toolName.includes('拆分') || toolName.includes('合并') || toolName.includes('旋转'))) ||
+                            (category === 'PDF增强' && (toolName.includes('水印') || toolName.includes('签名'))) ||
+                            (category === '文件压缩' && toolName.includes('压缩'))
+                        );
+                        card.style.display = shouldShow ? 'flex' : 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

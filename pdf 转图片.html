@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF转图片 - 我爱PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <style>
+/* 在你现有的style标签内添加 */
+/* 修改导航栏样式 */
+.category-nav {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    text-decoration: none;
+    color: #333;
+}
+
+.logo-heart {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+    margin: 0 -2px;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* 调整主容器的上边距 */
+.container {
+    margin-top: 80px;  /* 增加上边距 */
+    padding-top: 20px;
+}
+
+/* 添加分类按钮样式 */
+.category-select {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.category-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    color: #4a5568;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+}
+
+.category-btn:hover,
+.category-btn.active {
+    background: rgba(244, 67, 54, 0.1);
+    color: #f44336;
+}
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 48px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .select-button, #convertBtn, #downloadBtn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 25px 60px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+        .nav-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+        .select-button:hover, #convertBtn:hover, #downloadBtn:hover, .nav-button:hover {
+            background-color: #d32f2f;
+        }
+        #pdfInput {
+            display: none;
+        }
+        .progress-container {
+            width: 100%;
+            margin-top: 20px;
+            display: none;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background-color: #4CAF50;
+            transition: width 0.3s;
+        }
+        .progress-text {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        #pdfPreview {
+            max-width: 200px;
+            max-height: 300px;
+            border: 1px solid #ddd;
+        }
+        #previewContainer {
+            display: none;
+            margin-top: 20px;
+        }
+        #pageInfo {
+            margin-top: 5px;
+            font-size: 16px;
+            color: #666;
+        }
+        #cancelBtn {
+            background-color: #666;
+            margin-top: 10px;
+        }
+        .quality-selector {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        .image-item {
+            position: relative;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .image-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .image-item .download-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .download-all-jpg {
+            background-color: #4CAF50;
+            margin-top: 10px;
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 32px;
+            }
+            p {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+            .select-button, #convertBtn, #downloadBtn {
+                padding: 15px 30px;
+                font-size: 18px;
+                width: 100%;
+                max-width: 300px;
+                margin: 5px auto;
+            }
+            .nav-button {
+                padding: 8px 16px;
+                font-size: 14px;
+                margin: 3px;
+            }
+            .quality-selector {
+                margin: 15px 0;
+            }
+            #pdfPreview {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+   <!-- 在body开始处添加 -->
+<nav class="category-nav">
+    <div class="nav-left">
+        <!-- 修改logo链接，确保路径正确 -->
+        <a href="/index.html" class="logo-container" onclick="goToHome(event)">
+            <span class="logo-text">我爱</span>
+            <svg class="logo-heart" viewBox="0 0 24 24">
+                <path fill="#f44336" d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/>
+                <path fill="#ffffff" d="M19,3.5L16,7V3.5H19Z"/>
+            </svg>
+            <span class="logo-text">PDF</span>
+        </a>
+
+        <!-- 添加分类按钮 -->
+        <div class="category-select">
+            <button class="category-btn">所有工具</button>
+            <button class="category-btn">格式转换</button>
+            <button class="category-btn">PDF编辑</button>
+            <button class="category-btn">PDF增强</button>
+            <button class="category-btn">文件压缩</button>
+        </div>
+    </div>
+</nav>
+    <div class="container">
+        <h1>PDF 转 JPG</h1>
+        <p>将 PDF 文件的所有页面转换为 JPG 图片，并打包下载。</p>
+        <input type="file" id="pdfInput" accept=".pdf">
+        <button id="selectButton" class="select-button" onclick="document.getElementById('pdfInput').click()">选择PDF文件</button>
+        
+        <div class="quality-selector">
+            <label for="imageQuality">图片质量：</label>
+            <select id="imageQuality">
+                <option value="0.7">普通</option>
+                <option value="0.85">高质量</option>
+                <option value="1">最高质量</option>
+            </select>
+        </div>
+
+        <div id="previewContainer">
+            <canvas id="pdfPreview"></canvas>
+            <div id="pageInfo"></div>
+            <button id="prevPage" class="nav-button">上一页</button>
+            <button id="nextPage" class="nav-button">下一页</button>
+        </div>
+
+        <button id="convertBtn" style="display:none;">开始转换</button>
+        <button id="cancelBtn" style="display:none;" class="nav-button">取消转换</button>
+        
+        <div id="convertProgress" class="progress-container">
+            <div class="progress-bar">
+                <div id="convertProgressFill" class="progress-fill"></div>
+            </div>
+            <div id="convertProgressText" class="progress-text">转换进度：0%</div>
+        </div>
+
+        <div id="loadingSpinner" class="loading-spinner" style="display:none;"></div>
+        <a id="downloadBtn" style="display:none;">下载ZIP文件</a>
+        <button id="downloadJpgBtn" class="select-button download-all-jpg" style="display:none;">下载所有JPG</button>
+        <div id="imagesPreview" class="images-grid" style="display:none;"></div>
+    </div>
+
+    <script>
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+        let isConverting = false;
+        let cancelConversion = false;
+        let convertedImages = [];
+
+        const pdfInput = document.getElementById('pdfInput');
+        const selectButton = document.getElementById('selectButton');
+        const previewContainer = document.getElementById('previewContainer');
+        const pdfPreview = document.getElementById('pdfPreview');
+        const pageInfo = document.getElementById('pageInfo');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const convertBtn = document.getElementById('convertBtn');
+        const convertProgress = document.getElementById('convertProgress');
+        const convertProgressFill = document.getElementById('convertProgressFill');
+        const convertProgressText = document.getElementById('convertProgressText');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        pdfInput.addEventListener('change', handlePDFSelection);
+        convertBtn.addEventListener('click', convertPDFtoJPG);
+        prevPageBtn.addEventListener('click', onPrevPage);
+        nextPageBtn.addEventListener('click', onNextPage);
+
+        function handlePDFSelection(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            try {
+                if (file.type !== 'application/pdf') {
+                    throw new Error('请选择有效的PDF文件');
+                }
+                selectButton.style.display = 'none';
+                loadPDF(file);
+            } catch (error) {
+                alert(error.message);
+                pdfInput.value = '';
+            }
+        }
+
+        function loadPDF(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const typedarray = new Uint8Array(e.target.result);
+                pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+                    pdfDoc = pdf;
+                    previewContainer.style.display = 'block';
+                    convertBtn.style.display = 'inline-block';
+                    renderPage(pageNum);
+                });
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({scale: 1});
+                const scale = Math.min(200 / viewport.width, 300 / viewport.height);
+                const scaledViewport = page.getViewport({scale: scale});
+                pdfPreview.height = scaledViewport.height;
+                pdfPreview.width = scaledViewport.width;
+                const renderContext = {
+                    canvasContext: pdfPreview.getContext('2d'),
+                    viewport: scaledViewport
+                };
+                page.render(renderContext);
+
+                pageRendering = false;
+                if (pageNumPending !== null) {
+                    renderPage(pageNumPending);
+                    pageNumPending = null;
+                }
+            });
+
+            pageInfo.textContent = `第 ${num} 页 / 共 ${pdfDoc.numPages} 页`;
+        }
+
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        function onPrevPage() {
+            if (pageNum <= 1) return;
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+
+        function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
+
+        async function convertPDFtoJPG() {
+            const file = pdfInput.files[0];
+            const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB限制
+
+            if (file.size > MAX_FILE_SIZE) {
+                alert('文件大小不能超过100MB');
+                return;
+            }
+
+            try {
+                isConverting = true;
+                cancelConversion = false;
+                cancelBtn.style.display = 'inline-block';
+                convertBtn.style.display = 'none';
+                previewContainer.style.display = 'none';
+                convertProgress.style.display = 'block';
+
+                convertedImages = [];
+                const imagesPreview = document.getElementById('imagesPreview');
+                imagesPreview.innerHTML = '';
+
+                const zip = new JSZip();
+                const reader = new FileReader();
+
+                reader.onload = async function(e) {
+                    try {
+                        const typedarray = new Uint8Array(e.target.result);
+                        const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                        const totalPages = pdf.numPages;
+
+                        for (let i = 1; i <= totalPages; i++) {
+                            if (cancelConversion) {
+                                throw new Error('用户取消转换');
+                            }
+
+                            const page = await pdf.getPage(i);
+                            const scale = 2;
+                            const viewport = page.getViewport({scale: scale});
+                            const canvas = document.createElement('canvas');
+                            const context = canvas.getContext('2d');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+                            await page.render({canvasContext: context, viewport: viewport}).promise;
+
+                            const quality = parseFloat(document.getElementById('imageQuality').value);
+                            const imgData = canvas.toDataURL('image/jpeg', quality);
+
+                            convertedImages.push({
+                                name: `${i.toString().padStart(3, '0')}.jpg`,
+                                data: imgData
+                            });
+
+                            addImageToPreview(imgData, i);
+
+                            zip.file(`${i.toString().padStart(3, '0')}.jpg`, imgData.split(',')[1], {base64: true});
+                            updateProgress((i / totalPages) * 100);
+                        }
+
+                        const zipContent = await zip.generateAsync({type: 'blob'});
+                        const zipUrl = URL.createObjectURL(zipContent);
+                        downloadBtn.href = zipUrl;
+                        downloadBtn.download = file.name.replace('.pdf', '.zip');
+                        downloadBtn.style.display = 'inline-block';
+                        document.getElementById('downloadJpgBtn').style.display = 'inline-block';
+                        document.getElementById('imagesPreview').style.display = 'grid';
+                        convertProgress.style.display = 'none';
+
+                    } catch (error) {
+                        alert(`转换出错: ${error.message}`);
+                    }
+                };
+
+                reader.readAsArrayBuffer(file);
+
+            } catch (error) {
+                alert(`转换出错: ${error.message}`);
+            } finally {
+                isConverting = false;
+                cancelBtn.style.display = 'none';
+            }
+        }
+
+        function addImageToPreview(imgData, pageNum) {
+            const imagesPreview = document.getElementById('imagesPreview');
+            const imageItem = document.createElement('div');
+            imageItem.className = 'image-item';
+
+            const img = document.createElement('img');
+            img.src = imgData;
+
+            const downloadBadge = document.createElement('div');
+            downloadBadge.className = 'download-badge';
+            downloadBadge.textContent = '下载';
+            downloadBadge.onclick = () => downloadSingleImage(imgData, pageNum);
+
+            imageItem.appendChild(img);
+            imageItem.appendChild(downloadBadge);
+            imagesPreview.appendChild(imageItem);
+        }
+
+        function downloadSingleImage(imgData, pageNum) {
+            const link = document.createElement('a');
+            link.href = imgData;
+            link.download = `page_${pageNum.toString().padStart(3, '0')}.jpg`;
+            link.click();
+        }
+
+        document.getElementById('downloadJpgBtn').addEventListener('click', () => {
+            convertedImages.forEach(img => {
+                const link = document.createElement('a');
+                link.href = img.data;
+                link.download = img.name;
+                link.click();
+            });
+        });
+
+        document.getElementById('cancelBtn').addEventListener('click', () => {
+            if (isConverting) {
+                cancelConversion = true;
+                convertProgress.style.display = 'none';
+                previewContainer.style.display = 'block';
+                convertBtn.style.display = 'inline-block';
+            }
+        });
+
+        function updateProgress(percent) {
+            const roundedPercent = Math.round(percent);
+            convertProgressFill.style.width = `${roundedPercent}%`;
+            convertProgressText.textContent = `转换进度：${roundedPercent}%`;
+        }
+// 在你的script标签最后添加
+function goToHome(event) {
+    event.preventDefault();
+    // 根据实际部署情况调整路径
+    window.location.href = '/index.html';
+}
+
+// 确保页面加载完成后绑定事件
+document.addEventListener('DOMContentLoaded', function() {
+    // 为所有分类按钮添加点击事件
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+});
+    </script>
+</body>
+</html>
